@@ -27,114 +27,6 @@ class MenuViewController: UIViewController {
 }
 
 
-// MARK: - UI Setup
-private extension MenuViewController {
-    func setupUI() {
-        instantiateAllViews()
-        updateConstraintsMode()
-        addCustomViewsAsSubviews()
-        setupAllViews()
-        setupLayoutConstraints()
-    }
-    
-    func instantiateAllViews() {
-        scrollView = UIScrollView()
-        contentView = UIView()
-        selectRegionButton = UIButton()
-        specialOffersView = SpecialOffersView()
-        menuSectionsView = MenuSectionsView()
-        menuTableView = UITableView()
-    }
-    
-    func updateConstraintsMode() {
-        scrollView.translatesAutoresizingMaskIntoConstraints = false
-        contentView.translatesAutoresizingMaskIntoConstraints = false
-        selectRegionButton.translatesAutoresizingMaskIntoConstraints = false
-        specialOffersView.translatesAutoresizingMaskIntoConstraints = false
-        menuSectionsView.translatesAutoresizingMaskIntoConstraints = false
-        menuTableView.translatesAutoresizingMaskIntoConstraints = false
-    }
-    
-    func addCustomViewsAsSubviews() {
-        view.addSubview(selectRegionButton)
-        view.addSubview(scrollView)
-        scrollView.addSubview(contentView)
-        contentView.addSubview(specialOffersView)
-        view.addSubview(menuSectionsView)
-        contentView.addSubview(menuTableView)
-    }
-    
-    func setupAllViews() {
-        setupRegionsButton()
-        setupOffersView()
-        setupMenuSectionsView()
-        setupMenuTableView()
-        setupScrollView()
-    }
-    
-    func setupLayoutConstraints() {
-        NSLayoutConstraint.activate([
-
-            // Pin selectRegionButton
-            selectRegionButton.topAnchor.constraint(
-                equalTo: view.safeAreaLayoutGuide.topAnchor,
-                constant: selectRegionButtonTopConstraint),
-            selectRegionButton.leadingAnchor.constraint(
-                equalTo: view.leadingAnchor,
-                constant: selectRegionButtonLeadingConstraint),
-            
-            // Pin scrollView to the edges of the main view
-            scrollView.topAnchor.constraint(equalTo: selectRegionButton.bottomAnchor),
-            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            
-            // Pin contentView to the edges of the scrollView
-            contentView.topAnchor.constraint(equalTo: scrollView.topAnchor),
-            contentView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
-            contentView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
-            contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
-            contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
-            
-            specialOffersView.leadingAnchor.constraint(
-                equalTo: contentView.leadingAnchor),
-            specialOffersView.trailingAnchor.constraint(
-                equalTo: contentView.trailingAnchor),
-            specialOffersView.heightAnchor.constraint(
-                equalToConstant: specialOffersViewHeightConstraint),
-            specialOffersView.topAnchor.constraint(
-                equalTo: contentView.topAnchor,
-                constant: specialOffersViewTopConstraint),
-            
-            // Pin menuSectionsView to the bottom of selectRegionButton
-            menuSectionsView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            menuSectionsView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            menuSectionsView.heightAnchor.constraint(
-                equalToConstant: menuSectionsViewHeightConstraint),
-            menuSectionsView.topAnchor.constraint(
-                equalTo: selectRegionButton.bottomAnchor,
-                constant: menuSectionsViewTopConstraint),
-            
-            menuTableView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            menuTableView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            menuTableView.topAnchor.constraint(equalTo: specialOffersView.bottomAnchor, constant: menuTableViewTopConstraint),
-            menuTableView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
-        ])
-        
-        let contentHeight = NSLayoutConstraint(item: contentView as Any, attribute: .height, relatedBy: .greaterThanOrEqual, toItem: scrollView, attribute: .height, multiplier: 1.0, constant: CGFloat(200 * (menuElementsData.flatMap { $0.value }.count - 2)))
-        scrollView.addConstraint(contentHeight)
-    }
-    
-    // Values
-    var selectRegionButtonTopConstraint: CGFloat { 16 }
-    var selectRegionButtonLeadingConstraint: CGFloat { 16 }
-    var specialOffersViewHeightConstraint: CGFloat { 112 }
-    var specialOffersViewTopConstraint: CGFloat { 24 }
-    var menuSectionsViewHeightConstraint: CGFloat { 56 }
-    var menuSectionsViewTopConstraint: CGFloat { specialOffersViewHeightConstraint + 36 }
-    var menuTableViewTopConstraint: CGFloat { 80 }
-}
-
 // MARK: - ScrollView
 extension MenuViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -243,6 +135,13 @@ extension MenuViewController: MenuSectionsViewDelegate, MenuSectionsViewDataSour
         menuSectionsData.indices.forEach { menuSectionsData[$0].isActive = false }
         menuSectionsData[indexPath.row].isActive = true
         menuSectionsView.shouldReloadData = true
+        
+        let sectionToScroll = indexPath.row
+        let numberOfRows = tableView(menuTableView, numberOfRowsInSection: sectionToScroll)
+        if numberOfRows > 0 {
+            let indexPathToScroll = IndexPath(row: 0, section: sectionToScroll)
+            menuTableView.scrollToRow(at: indexPathToScroll, at: .top, animated: true)
+        }
     }
     
     func numberOfMenuSections() -> Int {
@@ -298,4 +197,111 @@ private extension MenuViewController {
     }
 }
 
+// MARK: - UI Setup
+private extension MenuViewController {
+    func setupUI() {
+        instantiateAllViews()
+        updateConstraintsMode()
+        addCustomViewsAsSubviews()
+        setupAllViews()
+        setupLayoutConstraints()
+    }
+    
+    func instantiateAllViews() {
+        scrollView = UIScrollView()
+        contentView = UIView()
+        selectRegionButton = UIButton()
+        specialOffersView = SpecialOffersView()
+        menuSectionsView = MenuSectionsView()
+        menuTableView = UITableView()
+    }
+    
+    func updateConstraintsMode() {
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        contentView.translatesAutoresizingMaskIntoConstraints = false
+        selectRegionButton.translatesAutoresizingMaskIntoConstraints = false
+        specialOffersView.translatesAutoresizingMaskIntoConstraints = false
+        menuSectionsView.translatesAutoresizingMaskIntoConstraints = false
+        menuTableView.translatesAutoresizingMaskIntoConstraints = false
+    }
+    
+    func addCustomViewsAsSubviews() {
+        view.addSubview(selectRegionButton)
+        view.addSubview(scrollView)
+        scrollView.addSubview(contentView)
+        contentView.addSubview(specialOffersView)
+        view.addSubview(menuSectionsView)
+        contentView.addSubview(menuTableView)
+    }
+    
+    func setupAllViews() {
+        setupRegionsButton()
+        setupOffersView()
+        setupMenuSectionsView()
+        setupMenuTableView()
+        setupScrollView()
+    }
+    
+    func setupLayoutConstraints() {
+        NSLayoutConstraint.activate([
+            
+            // Pin selectRegionButton
+            selectRegionButton.topAnchor.constraint(
+                equalTo: view.safeAreaLayoutGuide.topAnchor,
+                constant: selectRegionButtonTopConstraint),
+            selectRegionButton.leadingAnchor.constraint(
+                equalTo: view.leadingAnchor,
+                constant: selectRegionButtonLeadingConstraint),
+            
+            // Pin scrollView to the edges of the main view
+            scrollView.topAnchor.constraint(equalTo: selectRegionButton.bottomAnchor),
+            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            
+            // Pin contentView to the edges of the scrollView
+            contentView.topAnchor.constraint(equalTo: scrollView.topAnchor),
+            contentView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
+            contentView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
+            contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
+            contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
+            
+            specialOffersView.leadingAnchor.constraint(
+                equalTo: contentView.leadingAnchor),
+            specialOffersView.trailingAnchor.constraint(
+                equalTo: contentView.trailingAnchor),
+            specialOffersView.heightAnchor.constraint(
+                equalToConstant: specialOffersViewHeightConstraint),
+            specialOffersView.topAnchor.constraint(
+                equalTo: contentView.topAnchor,
+                constant: specialOffersViewTopConstraint),
+            
+            // Pin menuSectionsView to the bottom of selectRegionButton
+            menuSectionsView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            menuSectionsView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            menuSectionsView.heightAnchor.constraint(
+                equalToConstant: menuSectionsViewHeightConstraint),
+            menuSectionsView.topAnchor.constraint(
+                equalTo: selectRegionButton.bottomAnchor,
+                constant: menuSectionsViewTopConstraint),
+            
+            menuTableView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            menuTableView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            menuTableView.topAnchor.constraint(equalTo: specialOffersView.bottomAnchor, constant: menuTableViewTopConstraint),
+            menuTableView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
+        ])
+        
+        let contentHeight = NSLayoutConstraint(item: contentView as Any, attribute: .height, relatedBy: .greaterThanOrEqual, toItem: scrollView, attribute: .height, multiplier: 1.0, constant: CGFloat(200 * (menuElementsData.flatMap { $0.value }.count - 2)))
+        scrollView.addConstraint(contentHeight)
+    }
+    
+    // Values
+    var selectRegionButtonTopConstraint: CGFloat { 16 }
+    var selectRegionButtonLeadingConstraint: CGFloat { 16 }
+    var specialOffersViewHeightConstraint: CGFloat { 112 }
+    var specialOffersViewTopConstraint: CGFloat { 24 }
+    var menuSectionsViewHeightConstraint: CGFloat { 56 }
+    var menuSectionsViewTopConstraint: CGFloat { specialOffersViewHeightConstraint + 36 }
+    var menuTableViewTopConstraint: CGFloat { 80 }
+}
 

@@ -28,6 +28,10 @@ class MenuElementTableViewCell: UITableViewCell {
         priceButton.layer.borderColor = UIColor(named: "AccentColor")!.cgColor
         priceButton.layer.cornerRadius = 6
         displayedImage.layer.cornerRadius = displayedImage.frame.height / 2
+
+        titleLabel.numberOfLines = 0
+        titleLabel.textAlignment = .left
+        titleLabel.contentMode = .top
     }
         
     func setup(with data: MenuElementData) {
