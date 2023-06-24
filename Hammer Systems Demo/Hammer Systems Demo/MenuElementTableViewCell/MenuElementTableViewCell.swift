@@ -18,7 +18,7 @@ class MenuElementTableViewCell: UITableViewCell {
         super.awakeFromNib()
         setupAppearance()
     }
-
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
@@ -27,18 +27,12 @@ class MenuElementTableViewCell: UITableViewCell {
         priceButton.layer.borderWidth = 1
         priceButton.layer.borderColor = UIColor(named: "AccentColor")!.cgColor
         priceButton.layer.cornerRadius = 6
-        
-        if let data = cellData {
-            displayedImage.image = UIImage(named: data.imageName)!
-            titleLabel.text = data.title
-            descriptionLabel.text = data.subtitle
-            priceButton.setTitle(data.price, for: .normal)
-        }
     }
-    
-    private var cellData: MenuElementData? = nil
-    
+        
     func setup(with data: MenuElementData) {
-        cellData = data
+        displayedImage.image = UIImage(named: data.imageName)!
+        titleLabel.text = data.title
+        descriptionLabel.text = data.subtitle
+        priceButton.setTitle(data.price, for: .normal)
     }
 }

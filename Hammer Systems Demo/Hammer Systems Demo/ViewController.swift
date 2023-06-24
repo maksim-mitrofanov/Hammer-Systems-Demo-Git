@@ -61,7 +61,8 @@ extension ViewController: UITableViewDataSource {
     }
     
     func setupMenuTableView() {
-        menuTableView.register(MenuElementTableViewCell.self, forCellReuseIdentifier: tableViewCellID)
+        let nib = UINib(nibName: "MenuElementTableViewCell", bundle: nil)
+        menuTableView.register(nib, forCellReuseIdentifier: tableViewCellID)
         menuTableView.dataSource = self
         menuTableView.layer.cornerRadius = 30
     }
