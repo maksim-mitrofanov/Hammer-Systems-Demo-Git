@@ -143,7 +143,7 @@ extension MenuViewController: UIScrollViewDelegate {
         let originalY = selectRegionButton.frame.maxY + max((specialOffersView.frame.maxY - yOffset), 0)
         var newY = max(originalY - yOffset / 12, originalY)
         
-        // May need updates
+        // Needs updates
         if yOffset < 136  {
             newY += 12
         }

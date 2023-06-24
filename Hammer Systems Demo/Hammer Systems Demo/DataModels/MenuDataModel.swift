@@ -32,18 +32,53 @@ class MenuDataModel {
     
     static func getMenuElementsData() -> [MenuElementData] {
         [
-            MenuElementData(imageName: "Pizza 1", title: "Ветчина и грибы", subtitle: "Ветчина, шампиньоны, увеличенная порция моцареллы, томатный соус", price: "от 345 р"),
-            MenuElementData(imageName: "Pizza 2", title: "Баварские колбаски", subtitle: "Баварски колбаски,ветчина, пикантная пепперони, острая чоризо, моцарелла, томатный соус", price: "от 345 р"),
-            MenuElementData(imageName: "Pizza 3", title: "Нежный лосось", subtitle: "Лосось, томаты черри, моцарелла, соус песто", price: "от 345 р"),
-            MenuElementData(imageName: "Pizza 1", title: "Ветчина и грибы", subtitle: "Ветчина, шампиньоны, увеличенная порция моцареллы, томатный соус", price: "от 345 р"),
-            MenuElementData(imageName: "Pizza 2", title: "Баварские колбаски", subtitle: "Баварски колбаски,ветчина, пикантная пепперони, острая чоризо, моцарелла, томатный соус", price: "от 345 р"),
-            MenuElementData(imageName: "Pizza 3", title: "Нежный лосось", subtitle: "Лосось, томаты черри, моцарелла, соус песто", price: "от 345 р"),
-            MenuElementData(imageName: "Pizza 1", title: "Ветчина и грибы", subtitle: "Ветчина, шампиньоны, увеличенная порция моцареллы, томатный соус", price: "от 345 р"),
-            MenuElementData(imageName: "Pizza 2", title: "Баварские колбаски", subtitle: "Баварски колбаски,ветчина, пикантная пепперони, острая чоризо, моцарелла, томатный соус", price: "от 345 р"),
-            MenuElementData(imageName: "Pizza 3", title: "Нежный лосось", subtitle: "Лосось, томаты черри, моцарелла, соус песто", price: "от 345 р"),
-            MenuElementData(imageName: "Pizza 1", title: "Ветчина и грибы", subtitle: "Ветчина, шампиньоны, увеличенная порция моцареллы, томатный соус", price: "от 345 р"),
-            MenuElementData(imageName: "Pizza 2", title: "Баварские колбаски", subtitle: "Баварски колбаски,ветчина, пикантная пепперони, острая чоризо, моцарелла, томатный соус", price: "от 345 р"),
-            MenuElementData(imageName: "Pizza 3", title: "Нежный лосось", subtitle: "Лосось, томаты черри, моцарелла, соус песто", price: "от 345 р"),
+            MenuElementData(
+                imageName: "Pizza 1",
+                title: "Ветчина и грибы",
+                subtitle: "Ветчина, шампиньоны, увеличенная порция моцареллы, томатный соус",
+                price: "от 345 р",
+                section: .pizza
+            ),
+            
+            MenuElementData(
+                imageName: "Pizza 2",
+                title: "Баварские колбаски",
+                subtitle: "Баварски колбаски,ветчина, пикантная пепперони, острая чоризо, моцарелла, томатный соус",
+                price: "от 345 р",
+                section: .pizza
+            ),
+            
+            MenuElementData(
+                imageName: "Pizza 3",
+                title: "Нежный лосось",
+                subtitle: "Лосось, томаты черри, моцарелла, соус песто",
+                price: "от 345 р",
+                section: .pizza
+            ),
+            
+            MenuElementData(
+                imageName: "KFC Combo",
+                title: "Сандерс Меню",
+                subtitle: "Крылья, ножки + напиток",
+                price: "от 500 р",
+                section: .combo
+            ),
+            
+            MenuElementData(
+                imageName: "Bubble Tea",
+                title: "Bubble Tea",
+                subtitle: "Час с шариками тапиока",
+                price: "от 150 р",
+                section: .drinks
+            ),
+            
+            MenuElementData(
+                imageName: "Cinnamon Roll",
+                title: "Cinnamon Rolls",
+                subtitle: "Оригинальный десерт с корицей",
+                price: "от 450 р",
+                section: .deserts
+            )
         ]
     }
 }
