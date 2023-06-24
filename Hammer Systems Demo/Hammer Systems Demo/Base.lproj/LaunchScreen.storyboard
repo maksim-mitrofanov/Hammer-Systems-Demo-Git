@@ -24,8 +24,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="-10" translatesAutoresizingMaskIntoConstraints="NO" id="2bO-6Y-4fY">
-                                <rect key="frame" x="116.33333333333333" y="376.33333333333331" width="160.33333333333337" height="99.333333333333314"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="2bO-6Y-4fY">
+                                <rect key="frame" x="116.33333333333333" y="366.33333333333331" width="160.33333333333337" height="119.33333333333331"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hammer" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="efE-w4-Xdj">
                                         <rect key="frame" x="0.0" y="0.0" width="160.33333333333334" height="54.666666666666664"/>
@@ -34,7 +34,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Systems" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tkp-9m-p7M">
-                                        <rect key="frame" x="0.0" y="44.666666666666686" width="160.33333333333334" height="54.666666666666657"/>
+                                        <rect key="frame" x="0.0" y="64.666666666666686" width="160.33333333333334" height="54.666666666666657"/>
                                         <fontDescription key="fontDescription" name="Nunito-Bold" family="Nunito" pointSize="40"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
@@ -65,7 +65,7 @@
     </scenes>
     <resources>
         <namedColor name="MainDarkColor">
-            <color red="0.11372549019607843" green="0.11372549019607843" blue="0.12156862745098039" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.11400000005960464" green="0.11400000005960464" blue="0.12200000137090683" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
 </document>

@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  MenuViewController.swift
 //  Hammer Systems Demo
 //
 //  Created by Максим Митрофанов on 23.06.2023.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class MenuViewController: UIViewController {
     
     private var scrollView: UIScrollView!
     private var contentView: UIView!
@@ -21,69 +21,67 @@ class ViewController: UIViewController {
         setupUI()
     }
     
-    var bannersData = [
-        "Demo Banner 1",
-        "Demo Banner 2",
-        "Demo Banner 1",
-        "Demo Banner 2",
-        "Demo Banner 1",
-        "Demo Banner 2",
-    ]
-    
-    var menuSectionsData = [
-        MenuSectionCellData(title: "Пицца", isActive: true),
-        MenuSectionCellData(title: "Комбо"),
-        MenuSectionCellData(title: "Десерты"),
-        MenuSectionCellData(title: "Напитки")
-    ]
-    
-    var menuElementsData = [
-        MenuElementData(imageName: "Pizza 1", title: "Ветчина и грибы", subtitle: "Ветчина, шампиньоны, увеличенная порция моцареллы, томатный соус", price: "от 345 р"),
-        MenuElementData(imageName: "Pizza 2", title: "Баварские колбаски", subtitle: "Баварски колбаски,ветчина, пикантная пепперони, острая чоризо, моцарелла, томатный соус", price: "от 345 р"),
-        MenuElementData(imageName: "Pizza 3", title: "Нежный лосось", subtitle: "Лосось, томаты черри, моцарелла, соус песто", price: "от 345 р"),
-        MenuElementData(imageName: "Pizza 1", title: "Ветчина и грибы", subtitle: "Ветчина, шампиньоны, увеличенная порция моцареллы, томатный соус", price: "от 345 р"),
-        MenuElementData(imageName: "Pizza 2", title: "Баварские колбаски", subtitle: "Баварски колбаски,ветчина, пикантная пепперони, острая чоризо, моцарелла, томатный соус", price: "от 345 р"),
-        MenuElementData(imageName: "Pizza 3", title: "Нежный лосось", subtitle: "Лосось, томаты черри, моцарелла, соус песто", price: "от 345 р"),
-        MenuElementData(imageName: "Pizza 1", title: "Ветчина и грибы", subtitle: "Ветчина, шампиньоны, увеличенная порция моцареллы, томатный соус", price: "от 345 р"),
-        MenuElementData(imageName: "Pizza 2", title: "Баварские колбаски", subtitle: "Баварски колбаски,ветчина, пикантная пепперони, острая чоризо, моцарелла, томатный соус", price: "от 345 р"),
-        MenuElementData(imageName: "Pizza 3", title: "Нежный лосось", subtitle: "Лосось, томаты черри, моцарелла, соус песто", price: "от 345 р"),
-        MenuElementData(imageName: "Pizza 1", title: "Ветчина и грибы", subtitle: "Ветчина, шампиньоны, увеличенная порция моцареллы, томатный соус", price: "от 345 р"),
-        MenuElementData(imageName: "Pizza 2", title: "Баварские колбаски", subtitle: "Баварски колбаски,ветчина, пикантная пепперони, острая чоризо, моцарелла, томатный соус", price: "от 345 р"),
-        MenuElementData(imageName: "Pizza 3", title: "Нежный лосось", subtitle: "Лосось, томаты черри, моцарелла, соус песто", price: "от 345 р"),
-    ]
+    var bannersData = MenuDataModel.getBannersData()
+    var menuSectionsData = MenuDataModel.getMenuSectionsData()
+    var menuElementsData = MenuDataModel.getMenuElementsData()
 }
 
-extension ViewController {
+
+// MARK: - UI Setup
+private extension MenuViewController {
     func setupUI() {
+        instantiateAllViews()
+        updateConstraintsMode()
+        addCustomViewsAsSubviews()
+        setupAllViews()
+        setupLayoutConstraints()
+    }
+    
+    func instantiateAllViews() {
         scrollView = UIScrollView()
         contentView = UIView()
         selectRegionButton = UIButton()
         specialOffersView = SpecialOffersView()
         menuSectionsView = MenuSectionsView()
         menuTableView = UITableView()
-        
+    }
+    
+    func updateConstraintsMode() {
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         contentView.translatesAutoresizingMaskIntoConstraints = false
         selectRegionButton.translatesAutoresizingMaskIntoConstraints = false
         specialOffersView.translatesAutoresizingMaskIntoConstraints = false
         menuSectionsView.translatesAutoresizingMaskIntoConstraints = false
         menuTableView.translatesAutoresizingMaskIntoConstraints = false
-        
+    }
+    
+    func addCustomViewsAsSubviews() {
         view.addSubview(selectRegionButton)
         view.addSubview(scrollView)
         scrollView.addSubview(contentView)
         contentView.addSubview(specialOffersView)
         view.addSubview(menuSectionsView)
         contentView.addSubview(menuTableView)
-        
+    }
+    
+    func setupAllViews() {
         setupRegionsButton()
         setupOffersView()
         setupMenuSectionsView()
         setupMenuTableView()
-        
+        setupScrollView()
+    }
+    
+    func setupLayoutConstraints() {
         NSLayoutConstraint.activate([
-            selectRegionButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
-            selectRegionButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+
+            // Pin selectRegionButton
+            selectRegionButton.topAnchor.constraint(
+                equalTo: view.safeAreaLayoutGuide.topAnchor,
+                constant: selectRegionButtonTopConstraint),
+            selectRegionButton.leadingAnchor.constraint(
+                equalTo: view.leadingAnchor,
+                constant: selectRegionButtonLeadingConstraint),
             
             // Pin scrollView to the edges of the main view
             scrollView.topAnchor.constraint(equalTo: selectRegionButton.bottomAnchor),
@@ -98,53 +96,74 @@ extension ViewController {
             contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
             contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
             
-            specialOffersView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            specialOffersView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            specialOffersView.heightAnchor.constraint(equalToConstant: 112),
-            specialOffersView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 24),
+            specialOffersView.leadingAnchor.constraint(
+                equalTo: contentView.leadingAnchor),
+            specialOffersView.trailingAnchor.constraint(
+                equalTo: contentView.trailingAnchor),
+            specialOffersView.heightAnchor.constraint(
+                equalToConstant: specialOffersViewHeightConstraint),
+            specialOffersView.topAnchor.constraint(
+                equalTo: contentView.topAnchor,
+                constant: specialOffersViewTopConstraint),
             
+            // Pin menuSectionsView to the bottom of selectRegionButton
             menuSectionsView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             menuSectionsView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            menuSectionsView.heightAnchor.constraint(equalToConstant: 56),
-            menuSectionsView.topAnchor.constraint(equalTo: selectRegionButton.bottomAnchor, constant: 112 + 36),
+            menuSectionsView.heightAnchor.constraint(
+                equalToConstant: menuSectionsViewHeightConstraint),
+            menuSectionsView.topAnchor.constraint(
+                equalTo: selectRegionButton.bottomAnchor,
+                constant: menuSectionsViewTopConstraint),
             
             menuTableView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             menuTableView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            menuTableView.topAnchor.constraint(equalTo: specialOffersView.bottomAnchor, constant: 32 + 48),
+            menuTableView.topAnchor.constraint(equalTo: specialOffersView.bottomAnchor, constant: menuTableViewTopConstraint),
             menuTableView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         ])
         
-        // Set the content size of the scrollView based on the contentView's size
-        let contentHeight = NSLayoutConstraint(item: contentView, attribute: .height, relatedBy: .greaterThanOrEqual, toItem: scrollView, attribute: .height, multiplier: 1.0, constant: CGFloat(200 * (menuElementsData.count - 2)))
+        let contentHeight = NSLayoutConstraint(item: contentView as Any, attribute: .height, relatedBy: .greaterThanOrEqual, toItem: scrollView, attribute: .height, multiplier: 1.0, constant: CGFloat(200 * (menuElementsData.count - 2)))
         scrollView.addConstraint(contentHeight)
-        
-        scrollView.showsVerticalScrollIndicator = false
-        scrollView.backgroundColor = .clear
-        contentView.backgroundColor = .clear
-        
-        scrollView.delegate = self
     }
+    
+    // Values
+    var selectRegionButtonTopConstraint: CGFloat { 16 }
+    var selectRegionButtonLeadingConstraint: CGFloat { 16 }
+    var specialOffersViewHeightConstraint: CGFloat { 112 }
+    var specialOffersViewTopConstraint: CGFloat { 24 }
+    var menuSectionsViewHeightConstraint: CGFloat { 56 }
+    var menuSectionsViewTopConstraint: CGFloat { specialOffersViewHeightConstraint + 36 }
+    var menuTableViewTopConstraint: CGFloat { 80 }
 }
 
-extension ViewController: UIScrollViewDelegate {
+// MARK: - ScrollView
+extension MenuViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let yOffset = scrollView.contentOffset.y
         var menuSectionsViewFrame = menuSectionsView.frame
         let originalY = selectRegionButton.frame.maxY + max((specialOffersView.frame.maxY - yOffset), 0)
         var newY = max(originalY - yOffset / 12, originalY)
         
+        // May need updates
         if yOffset < 136  {
             newY += 12
         }
+
         print("Offset: \(yOffset), newY: \(newY)")
         
         menuSectionsViewFrame.origin.y = newY
         menuSectionsView.frame = menuSectionsViewFrame
     }
+    
+    func setupScrollView() {
+        scrollView.showsVerticalScrollIndicator = false
+        scrollView.backgroundColor = .clear
+        contentView.backgroundColor = .clear
+        scrollView.delegate = self
+    }
 }
 
 // MARK: - MenuTableView
-extension ViewController: UITableViewDataSource, UITableViewDelegate {
+extension MenuViewController: UITableViewDataSource, UITableViewDelegate {
     var tableViewCellID: String { "MenuElementTableViewCell" }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -174,7 +193,7 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
 }
 
 // MARK: - SpecialOffersView
-extension ViewController: SpecialOffersViewDelegate, SpecialOffersViewDataSource {
+extension MenuViewController: SpecialOffersViewDelegate, SpecialOffersViewDataSource {
     private func setupOffersView() {
         specialOffersView.backgroundColor = .clear
         specialOffersView.dataSource = self
@@ -195,7 +214,7 @@ extension ViewController: SpecialOffersViewDelegate, SpecialOffersViewDataSource
 }
 
 // MARK: - MenuSectionsView {
-extension ViewController: MenuSectionsViewDelegate, MenuSectionsViewDataSource {
+extension MenuViewController: MenuSectionsViewDelegate, MenuSectionsViewDataSource {
     private func setupMenuSectionsView() {
         menuSectionsView.backgroundColor = .clear
         menuSectionsView.dataSource = self
@@ -218,7 +237,7 @@ extension ViewController: MenuSectionsViewDelegate, MenuSectionsViewDataSource {
 }
 
 // MARK: - SelectRegionButton
-private extension ViewController {
+private extension MenuViewController {
     func setupRegionsButton() {
         setupRegionsButtonAppearance()
         setupRegionMenuButtonOptions()
