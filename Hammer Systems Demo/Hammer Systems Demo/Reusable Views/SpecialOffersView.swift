@@ -43,7 +43,7 @@ extension SpecialOffersView: UICollectionViewDelegate, UICollectionViewDelegateF
     private func setupOffersCollectionView() {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
-        layout.itemSize = CGSize(width: offersCellWidth, height: bounds.height)
+        layout.itemSize = CGSize(width: offersCellWidth, height: 112)
         layout.minimumLineSpacing = offersCollectionHorizontalSpacing
         
         specialOffersCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)

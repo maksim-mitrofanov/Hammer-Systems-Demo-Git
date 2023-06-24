@@ -16,59 +16,10 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6gm-Lt-M7J">
-                                <rect key="frame" x="20" y="79" width="62" height="33"/>
-                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
-                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                <state key="normal" title="Москва">
-                                    <color key="titleColor" name="TitleTextColor"/>
-                                </state>
-                            </button>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ATW-kq-WQA" customClass="SpecialOffersView" customModule="Hammer_Systems_Demo" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="136" width="393" height="112"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="112" id="TTY-kp-jF8"/>
-                                </constraints>
-                            </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WMu-g8-hgt" customClass="MenuSectionsView" customModule="Hammer_Systems_Demo" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="272" width="393" height="32"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="32" id="vAC-yV-GpK"/>
-                                </constraints>
-                            </view>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="Iur-wc-EDu">
-                                <rect key="frame" x="0.0" y="328" width="393" height="441"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                            </tableView>
-                        </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" name="MainColor"/>
-                        <constraints>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="Iur-wc-EDu" secondAttribute="bottom" id="2Mk-jX-kci"/>
-                            <constraint firstItem="WMu-g8-hgt" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="4IC-IF-hEk"/>
-                            <constraint firstItem="WMu-g8-hgt" firstAttribute="top" secondItem="ATW-kq-WQA" secondAttribute="bottom" constant="24" id="GK6-At-Sfo"/>
-                            <constraint firstItem="Iur-wc-EDu" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Ml7-90-kbi"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="WMu-g8-hgt" secondAttribute="trailing" id="bIU-5p-vpd"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="6gm-Lt-M7J" secondAttribute="trailing" constant="100" id="cdn-Aq-Bui"/>
-                            <constraint firstItem="Iur-wc-EDu" firstAttribute="top" secondItem="WMu-g8-hgt" secondAttribute="bottom" constant="24" id="gMj-pm-KRE"/>
-                            <constraint firstItem="6gm-Lt-M7J" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="qtQ-mh-fyX"/>
-                            <constraint firstItem="6gm-Lt-M7J" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="20" id="t6Y-ZD-vkv"/>
-                            <constraint firstItem="ATW-kq-WQA" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="t9j-Fl-ftY"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Iur-wc-EDu" secondAttribute="trailing" id="ttc-u3-Np0"/>
-                            <constraint firstItem="ATW-kq-WQA" firstAttribute="top" secondItem="6gm-Lt-M7J" secondAttribute="bottom" constant="24" id="twY-BL-UOI"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="ATW-kq-WQA" secondAttribute="trailing" id="yHQ-E3-qII"/>
-                        </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Меню" image="Food icon" id="7MV-8n-sGo"/>
-                    <connections>
-                        <outlet property="menuSectionsView" destination="WMu-g8-hgt" id="UOC-i1-RHH"/>
-                        <outlet property="menuTableView" destination="Iur-wc-EDu" id="uLg-ht-2GF"/>
-                        <outlet property="selectRegionButton" destination="6gm-Lt-M7J" id="1qk-RH-fUV"/>
-                        <outlet property="specialOffersView" destination="ATW-kq-WQA" id="aJH-pa-CrR"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
@@ -155,9 +106,6 @@
         </namedColor>
         <namedColor name="MainColor">
             <color red="0.95300000905990601" green="0.96100002527236938" blue="0.97600001096725464" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
-        <namedColor name="TitleTextColor">
-            <color red="0.13699999451637268" green="0.15700000524520874" blue="0.18799999356269836" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

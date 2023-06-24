@@ -43,7 +43,7 @@ private extension MenuSectionsView {
     func setupMenuSectionCollectionView() {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
-        layout.itemSize = CGSize(width: menuSectionCellWidth, height: bounds.height)
+        layout.itemSize = CGSize(width: menuSectionCellWidth, height: 32)
         layout.minimumLineSpacing = menuSectionHorizontalSpacing
         
         menuSectionCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)

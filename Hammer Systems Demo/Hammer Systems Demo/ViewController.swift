@@ -9,17 +9,14 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    @IBOutlet private weak var selectRegionButton: UIButton!
-    @IBOutlet private weak var specialOffersView: SpecialOffersView!
-    @IBOutlet private weak var menuSectionsView: MenuSectionsView!
-    @IBOutlet private weak var menuTableView: UITableView!
+    private var selectRegionButton: UIButton!
+    private var specialOffersView: SpecialOffersView!
+    private var menuSectionsView: MenuSectionsView!
+    private var menuTableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupRegionsButton()
-        setupOffersView()
-        setupMenuSectionsView()
-        setupMenuTableView()
+        setupUI()
     }
     
     var bannersData = [
@@ -45,6 +42,50 @@ class ViewController: UIViewController {
     ]
 }
 
+extension ViewController {
+    func setupUI() {
+        selectRegionButton = UIButton()
+        specialOffersView = SpecialOffersView()
+        menuSectionsView = MenuSectionsView()
+        menuTableView = UITableView()
+        
+        selectRegionButton.translatesAutoresizingMaskIntoConstraints = false
+        specialOffersView.translatesAutoresizingMaskIntoConstraints = false
+        menuSectionsView.translatesAutoresizingMaskIntoConstraints = false
+        menuTableView.translatesAutoresizingMaskIntoConstraints = false
+
+        view.addSubview(selectRegionButton)
+        view.addSubview(specialOffersView)
+        view.addSubview(menuSectionsView)
+        view.addSubview(menuTableView)
+        
+        setupRegionsButton()
+        setupOffersView()
+        setupMenuSectionsView()
+        setupMenuTableView()
+        
+        NSLayoutConstraint.activate([
+            selectRegionButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
+            selectRegionButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
+            
+            specialOffersView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 0),
+            specialOffersView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: 0),
+            specialOffersView.heightAnchor.constraint(equalToConstant: 112),
+            specialOffersView.topAnchor.constraint(equalTo: selectRegionButton.bottomAnchor, constant: 24),
+            
+            menuSectionsView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 0),
+            menuSectionsView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: 0),
+            menuSectionsView.heightAnchor.constraint(equalToConstant: 32),
+            menuSectionsView.topAnchor.constraint(equalTo: specialOffersView.bottomAnchor, constant: 24),
+            
+            menuTableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 0),
+            menuTableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: 0),
+            menuTableView.topAnchor.constraint(equalTo: menuSectionsView.bottomAnchor, constant: 24),
+            menuTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0)
+        ])
+    }
+}
+
 // MARK: - MenuTableView
 extension ViewController: UITableViewDataSource {
     var tableViewCellID: String { "MenuElementTableViewCell" }
@@ -64,7 +105,8 @@ extension ViewController: UITableViewDataSource {
         let nib = UINib(nibName: "MenuElementTableViewCell", bundle: nil)
         menuTableView.register(nib, forCellReuseIdentifier: tableViewCellID)
         menuTableView.dataSource = self
-        menuTableView.layer.cornerRadius = 30
+        menuTableView.layer.cornerRadius = 20
+        menuTableView.isScrollEnabled = false
     }
 }
 
@@ -118,6 +160,7 @@ private extension ViewController {
         setupRegionsButtonAppearance()
         setupRegionMenuButtonOptions()
         selectRegionButton.showsMenuAsPrimaryAction = true
+        selectRegionButton.setTitle("Москва", for: .normal)
     }
     
     func setupRegionsButtonAppearance() {
