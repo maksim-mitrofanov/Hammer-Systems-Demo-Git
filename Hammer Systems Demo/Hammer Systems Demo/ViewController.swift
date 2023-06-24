@@ -105,7 +105,7 @@ extension ViewController {
             
             menuSectionsView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             menuSectionsView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            menuSectionsView.heightAnchor.constraint(equalToConstant: 48),
+            menuSectionsView.heightAnchor.constraint(equalToConstant: 56),
             menuSectionsView.topAnchor.constraint(equalTo: selectRegionButton.bottomAnchor, constant: 112 + 36),
             
             menuTableView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
@@ -131,7 +131,13 @@ extension ViewController: UIScrollViewDelegate {
         let yOffset = scrollView.contentOffset.y
         var menuSectionsViewFrame = menuSectionsView.frame
         let originalY = selectRegionButton.frame.maxY + max((specialOffersView.frame.maxY - yOffset), 0)
-        let newY = max(originalY - yOffset, originalY)
+        var newY = max(originalY - yOffset / 12, originalY)
+        
+        if yOffset < 136  {
+            newY += 12
+        }
+        print("Offset: \(yOffset), newY: \(newY)")
+        
         menuSectionsViewFrame.origin.y = newY
         menuSectionsView.frame = menuSectionsViewFrame
     }
