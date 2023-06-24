@@ -62,7 +62,7 @@ private extension MenuSectionsView {
         ])
         
         menuSectionCollectionView.showsHorizontalScrollIndicator = false
-        menuSectionCollectionView.backgroundColor = .clear
+        menuSectionCollectionView.backgroundColor = UIColor(named: "MainColor")
     }
     
     func cellForMenuSectionCollection(collectionView: UICollectionView, at indexPath: IndexPath) -> UICollectionViewCell {

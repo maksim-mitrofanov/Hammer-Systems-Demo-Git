@@ -15,7 +15,7 @@ class ViewController: UIViewController {
     private var specialOffersView: SpecialOffersView!
     private var menuSectionsView: MenuSectionsView!
     private var menuTableView: UITableView!
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
@@ -69,11 +69,11 @@ extension ViewController {
         menuSectionsView.translatesAutoresizingMaskIntoConstraints = false
         menuTableView.translatesAutoresizingMaskIntoConstraints = false
         
+        view.addSubview(selectRegionButton)
         view.addSubview(scrollView)
         scrollView.addSubview(contentView)
-        contentView.addSubview(selectRegionButton)
         contentView.addSubview(specialOffersView)
-        contentView.addSubview(menuSectionsView)
+        view.addSubview(menuSectionsView)
         contentView.addSubview(menuTableView)
         
         setupRegionsButton()
@@ -82,8 +82,11 @@ extension ViewController {
         setupMenuTableView()
         
         NSLayoutConstraint.activate([
+            selectRegionButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
+            selectRegionButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            
             // Pin scrollView to the edges of the main view
-            scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            scrollView.topAnchor.constraint(equalTo: selectRegionButton.bottomAnchor),
             scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
@@ -95,32 +98,42 @@ extension ViewController {
             contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
             contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
             
-            selectRegionButton.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
-            selectRegionButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-            
             specialOffersView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             specialOffersView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             specialOffersView.heightAnchor.constraint(equalToConstant: 112),
-            specialOffersView.topAnchor.constraint(equalTo: selectRegionButton.bottomAnchor, constant: 24),
+            specialOffersView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 24),
             
-            menuSectionsView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            menuSectionsView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            menuSectionsView.heightAnchor.constraint(equalToConstant: 32),
-            menuSectionsView.topAnchor.constraint(equalTo: specialOffersView.bottomAnchor, constant: 24),
+            menuSectionsView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            menuSectionsView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            menuSectionsView.heightAnchor.constraint(equalToConstant: 48),
+            menuSectionsView.topAnchor.constraint(equalTo: selectRegionButton.bottomAnchor, constant: 112 + 36),
             
             menuTableView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             menuTableView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            menuTableView.topAnchor.constraint(equalTo: menuSectionsView.bottomAnchor, constant: 24),
+            menuTableView.topAnchor.constraint(equalTo: specialOffersView.bottomAnchor, constant: 32 + 48),
             menuTableView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         ])
         
         // Set the content size of the scrollView based on the contentView's size
         let contentHeight = NSLayoutConstraint(item: contentView, attribute: .height, relatedBy: .greaterThanOrEqual, toItem: scrollView, attribute: .height, multiplier: 1.0, constant: CGFloat(200 * (menuElementsData.count - 2)))
         scrollView.addConstraint(contentHeight)
+        
         scrollView.showsVerticalScrollIndicator = false
         scrollView.backgroundColor = .clear
-        scrollView.backgroundColor = .clear
         contentView.backgroundColor = .clear
+        
+        scrollView.delegate = self
+    }
+}
+
+extension ViewController: UIScrollViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let yOffset = scrollView.contentOffset.y
+        var menuSectionsViewFrame = menuSectionsView.frame
+        let originalY = selectRegionButton.frame.maxY + max((specialOffersView.frame.maxY - yOffset), 0)
+        let newY = max(originalY - yOffset, originalY)
+        menuSectionsViewFrame.origin.y = newY
+        menuSectionsView.frame = menuSectionsViewFrame
     }
 }
 
