@@ -9,6 +9,8 @@ import UIKit
 
 class ViewController: UIViewController {
     
+    private var scrollView: UIScrollView!
+    private var contentView: UIView!
     private var selectRegionButton: UIButton!
     private var specialOffersView: SpecialOffersView!
     private var menuSectionsView: MenuSectionsView!
@@ -44,20 +46,26 @@ class ViewController: UIViewController {
 
 extension ViewController {
     func setupUI() {
+        scrollView = UIScrollView()
+        contentView = UIView()
         selectRegionButton = UIButton()
         specialOffersView = SpecialOffersView()
         menuSectionsView = MenuSectionsView()
         menuTableView = UITableView()
         
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        contentView.translatesAutoresizingMaskIntoConstraints = false
         selectRegionButton.translatesAutoresizingMaskIntoConstraints = false
         specialOffersView.translatesAutoresizingMaskIntoConstraints = false
         menuSectionsView.translatesAutoresizingMaskIntoConstraints = false
         menuTableView.translatesAutoresizingMaskIntoConstraints = false
-
-        view.addSubview(selectRegionButton)
-        view.addSubview(specialOffersView)
-        view.addSubview(menuSectionsView)
-        view.addSubview(menuTableView)
+        
+        view.addSubview(scrollView)
+        scrollView.addSubview(contentView)
+        contentView.addSubview(selectRegionButton)
+        contentView.addSubview(specialOffersView)
+        contentView.addSubview(menuSectionsView)
+        contentView.addSubview(menuTableView)
         
         setupRegionsButton()
         setupOffersView()
@@ -65,24 +73,41 @@ extension ViewController {
         setupMenuTableView()
         
         NSLayoutConstraint.activate([
-            selectRegionButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
-            selectRegionButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
+            // Pin scrollView to the edges of the main view
+            scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             
-            specialOffersView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 0),
-            specialOffersView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: 0),
+            // Pin contentView to the edges of the scrollView
+            contentView.topAnchor.constraint(equalTo: scrollView.topAnchor),
+            contentView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
+            contentView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
+            contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
+            contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
+            
+            selectRegionButton.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
+            selectRegionButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            
+            specialOffersView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            specialOffersView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             specialOffersView.heightAnchor.constraint(equalToConstant: 112),
             specialOffersView.topAnchor.constraint(equalTo: selectRegionButton.bottomAnchor, constant: 24),
             
-            menuSectionsView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 0),
-            menuSectionsView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: 0),
+            menuSectionsView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            menuSectionsView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             menuSectionsView.heightAnchor.constraint(equalToConstant: 32),
             menuSectionsView.topAnchor.constraint(equalTo: specialOffersView.bottomAnchor, constant: 24),
             
-            menuTableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 0),
-            menuTableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: 0),
+            menuTableView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            menuTableView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             menuTableView.topAnchor.constraint(equalTo: menuSectionsView.bottomAnchor, constant: 24),
-            menuTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0)
+            menuTableView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         ])
+        
+        // Set the content size of the scrollView based on the contentView's size
+        let contentHeight = NSLayoutConstraint(item: contentView, attribute: .height, relatedBy: .greaterThanOrEqual, toItem: scrollView, attribute: .height, multiplier: 1.0, constant: 0)
+        scrollView.addConstraint(contentHeight)
     }
 }
 
