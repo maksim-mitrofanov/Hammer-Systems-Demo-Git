@@ -98,7 +98,6 @@ extension MenuViewController: UITableViewDataSource, UITableViewDelegate {
         menuTableView.dataSource = self
         menuTableView.delegate = self
         menuTableView.layer.cornerRadius = 20
-        menuTableView.isScrollEnabled = false
     }
 }
 
@@ -136,12 +135,16 @@ extension MenuViewController: MenuSectionsViewDelegate, MenuSectionsViewDataSour
         menuSectionsData[indexPath.row].isActive = true
         menuSectionsView.shouldReloadData = true
         
-        let sectionToScroll = indexPath.row
-        let numberOfRows = tableView(menuTableView, numberOfRowsInSection: sectionToScroll)
-        if numberOfRows > 0 {
-            let indexPathToScroll = IndexPath(row: 0, section: sectionToScroll)
-            menuTableView.scrollToRow(at: indexPathToScroll, at: .top, animated: true)
-        }
+        scrollView.isScrollEnabled = false
+        menuTableView.isScrollEnabled = true
+        
+ 
+        let destinationIndexPath = IndexPath(row: 0, section: 3)
+        
+        menuTableView.scrollToRow(at: destinationIndexPath, at: .bottom, animated: true)
+        
+        scrollView.isScrollEnabled = true
+        menuTableView.isScrollEnabled = false
     }
     
     func numberOfMenuSections() -> Int {
