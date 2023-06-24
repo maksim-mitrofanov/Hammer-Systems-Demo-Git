@@ -13,8 +13,8 @@ struct MenuElementData {
     let subtitle: String
     let price: String
     let section: Section
-    
-    enum Section {
-        case pizza, combo, deserts, drinks
-    }
+}
+
+enum Section: CaseIterable {
+    case pizza, combo, deserts, drinks
 }

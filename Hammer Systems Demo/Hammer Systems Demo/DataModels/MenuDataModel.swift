@@ -30,8 +30,8 @@ class MenuDataModel {
         ]
     }
     
-    static func getMenuElementsData() -> [MenuElementData] {
-        [
+    static func getMenuElementsData() -> [Section: [MenuElementData]] {
+        let menuElementsData = [
             MenuElementData(
                 imageName: "Pizza 1",
                 title: "Ветчина и грибы",
@@ -39,7 +39,6 @@ class MenuDataModel {
                 price: "от 345 р",
                 section: .pizza
             ),
-            
             MenuElementData(
                 imageName: "Pizza 2",
                 title: "Баварские колбаски",
@@ -47,7 +46,6 @@ class MenuDataModel {
                 price: "от 345 р",
                 section: .pizza
             ),
-            
             MenuElementData(
                 imageName: "Pizza 3",
                 title: "Нежный лосось",
@@ -55,7 +53,6 @@ class MenuDataModel {
                 price: "от 345 р",
                 section: .pizza
             ),
-            
             MenuElementData(
                 imageName: "KFC Combo",
                 title: "Сандерс Меню",
@@ -63,7 +60,6 @@ class MenuDataModel {
                 price: "от 500 р",
                 section: .combo
             ),
-            
             MenuElementData(
                 imageName: "Bubble Tea",
                 title: "Bubble Tea",
@@ -71,7 +67,6 @@ class MenuDataModel {
                 price: "от 150 р",
                 section: .drinks
             ),
-            
             MenuElementData(
                 imageName: "Cinnamon Roll",
                 title: "Cinnamon Rolls",
@@ -80,5 +75,14 @@ class MenuDataModel {
                 section: .deserts
             )
         ]
+        
+        var menuElementsDataBySection: [Section: [MenuElementData]] = [:]
+        
+        for section in Section.allCases {
+            let sectionElements = menuElementsData.filter { $0.section == section }
+            menuElementsDataBySection[section] = sectionElements
+        }
+        
+        return menuElementsDataBySection
     }
 }

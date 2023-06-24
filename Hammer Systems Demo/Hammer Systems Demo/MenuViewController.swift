@@ -121,7 +121,7 @@ private extension MenuViewController {
             menuTableView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         ])
         
-        let contentHeight = NSLayoutConstraint(item: contentView as Any, attribute: .height, relatedBy: .greaterThanOrEqual, toItem: scrollView, attribute: .height, multiplier: 1.0, constant: CGFloat(200 * (menuElementsData.count - 2)))
+        let contentHeight = NSLayoutConstraint(item: contentView as Any, attribute: .height, relatedBy: .greaterThanOrEqual, toItem: scrollView, attribute: .height, multiplier: 1.0, constant: CGFloat(200 * (menuElementsData.flatMap { $0.value }.count - 2)))
         scrollView.addConstraint(contentHeight)
     }
     
@@ -166,20 +166,38 @@ extension MenuViewController: UIScrollViewDelegate {
 extension MenuViewController: UITableViewDataSource, UITableViewDelegate {
     var tableViewCellID: String { "MenuElementTableViewCell" }
     
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return menuElementsData.keys.count
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        menuElementsData.count
+        let currentSection = Section.allCases[section]
+        return menuElementsData[currentSection]?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: tableViewCellID) as! MenuElementTableViewCell
         
-        cell.setup(with: menuElementsData[indexPath.row])
+        let currentSection = Section.allCases[indexPath.section]
+        if let elementsInSection = menuElementsData[currentSection] {
+            cell.setup(with: elementsInSection[indexPath.row])
+        }
+        
         return cell
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        menuElementsData.append(menuElementsData[menuElementsData.count - 3])
-        menuTableView.reloadData()
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        let currentSection = Section.allCases[section]
+        switch currentSection {
+        case .pizza:
+            return "Pizza"
+        case .combo:
+            return "Combo"
+        case .deserts:
+            return "Desserts"
+        case .drinks:
+            return "Drinks"
+        }
     }
     
     func setupMenuTableView() {
